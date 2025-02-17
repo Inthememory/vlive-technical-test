@@ -1,0 +1,42 @@
+cubes:
+  - name: transactions
+    sql_table: transactions
+
+    dimensions:
+      - name: row_id
+        sql: row_id
+        type: number
+
+      - name: order_id
+        sql: order_id
+        type: string
+
+      - name: order_date
+        sql: order_date
+        type: time
+
+      - name: customer_id
+        sql: customer_id
+        type: string
+
+      - name: state
+        sql: state
+        type: string
+
+      - name: region
+        sql: region
+        type: string
+
+      - name: product_id
+        sql: product_id
+        type: string
+      
+    measures:
+      - name: turnover
+        sql: sales
+        type: sum
+        format: currency
+
+      - name: volume
+        sql: quantity
+        type: sum

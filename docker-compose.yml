@@ -1,0 +1,36 @@
+networks:
+  openfga:
+  cube:
+
+services:
+  ###
+  # Cube
+  ###
+  cube:
+    image: cubejs/cube:latest
+    hostname: cube
+    networks:
+      - cube
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+      - 15432:15432
+    env_file:
+      - ./cube/.env.development.local
+    volumes:
+      - ./cube:/cube/conf
+
+  pg:
+    image: postgres:16.7
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=vlive
+    volumes:
+      - ./postgres/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5436:5432
+    networks:
+      - cube
